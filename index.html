@@ -4,42 +4,110 @@
 	<meta charset="utf-8">
 	<script>
 		
-		function setSearchEngine(){
-			const searchForm = document.getElementById("searchForm");
-			const engine = document.getElementById("engine");
-			console.log("setSearchEngine ran")
-			console.log(searchForm.engine.value)
+		
+
+		// function setSearchEngine(){
+		// 	const searchForm = document.getElementById("searchForm");
+		// 	const engine = document.getElementById("engine");
+		// 	console.log("setSearchEngine ran")
+		// 	console.log(searchForm.engine.value)
 			
-			if (searchForm.engine.value=="google") {
-				searchForm.action = "https://www.google.com/search?q=test"
-				console.log(searchForm.action)
-				console.log(searchForm.engine.value)
-			 }
-			if (searchForm.engine.value=="duckduckgo") {
-				searchForm.action = "https://duckduckgo.com/?q=test"
-			 }
-			if (searchForm.engine.value=="bing") {
-				searchForm.action = "https://www.bing.com/search?q=test"
-			 }
-			if (searchForm.engine.value=="ask") {
-				searchForm.action = "https://www.ask.com/web?q=test"
-				console.log(searchForm.action)
-				console.log(searchForm.engine.value)
-			 }
+		// 	if (searchForm.engine.value=="google") {
+		// 		searchForm.action = "https://www.google.com/search?q=test"
+		// 		console.log(searchForm.action)
+		// 		console.log(searchForm.engine.value)
+		// 	 }
+		// 	if (searchForm.engine.value=="duckduckgo") {
+		// 		searchForm.action = "https://duckduckgo.com/?q=test"
+		// 	 }
+		// 	if (searchForm.engine.value=="bing") {
+		// 		searchForm.action = "https://www.bing.com/search?q=test"
+		// 	 }
+		// 	if (searchForm.engine.value=="ask") {
+		// 		searchForm.action = "https://www.ask.com/web?q=test"
+		// 		console.log(searchForm.action)
+		// 		console.log(searchForm.engine.value)
+		// 	 }
+		// }
+
+		//K wrote below function
+		function isNotEmpty(event, object, alertMessage) {
+			console.log("checking empty...")
+
+			if(object === null || object === undefined || object.value === "") {
+				alert(alertMessage);
+				event.preventDefault();
+				return false;
+			}
+
+			return true;
+			
+			// if (value === "") {
+			// 	alert("you gotta search something")
+			// 	event.preventDefault();
+			// }
 		}
+
+		function setSearchEngine() {
+
+			console.log(event);
+			
+			const engineSelected = document.querySelector("input[name=engine]:checked");
+			const queryInput = document.querySelector("input[name=q]");
+			// console.log(engineSelected);
+			// const engine = engineSelected.value;
+			let actions = {
+   				"google": "https://www.google.com/search?",
+				"duckduckgo": "https://duckduckgo.com/?",
+				"bing": "https://www.bing.com/search?",
+				"ask": "https://www.ask.com/web?"
+			};
+			
+			//sets actions to object's value (the URL)
+			
+			//LaunchCode wants me to use setAttribute() and it worked at first and then .....stopped...?
+			// searchForm.action.setAttribute(actions[engine])
+			// console.log(actions[engineSelected.value]);
+			// console.log(document.querySelector("input[name=q]").value);
+			console.log(engineSelected);
+			console.log(queryInput);
+			if(isNotEmpty(event, engineSelected, "empty engine") && isNotEmpty(event, queryInput, "empty query")) {
+				searchForm.action = actions[engineSelected.value]
+			}
+		}
+
+		// setAttribute() Sets the value of an attribute on the specified element. If the attribute already exists, the value is updated; otherwise a new attribute is added with the specified name and value. To get the current value of an attribute, use getAttribute() ; to remove an attribute, call removeAttribute() 
 		
 	// TODO: create a handler
     window.addEventListener("load", function(){
 		const searchForm = document.getElementById("searchForm");
-		searchForm.addEventListener("submit", setSearchEngine)  // TODO: register the handler
+		searchForm.addEventListener("submit", setSearchEngine);  // TODO: register the handler
+			
+		
+		// let searchInput = document.querySelector("input[name=queryIn]");
     });
+
+	//example from previous exercise
+// 	window.addEventListener("load", function() {
+//       let form = document.querySelector("form");
+//       form.addEventListener("submit", function(event) {
+//          let testNameInput = document.querySelector("input[name=testName]");
+//          let testDate = document.querySelector("input[name=testDate]");
+//          if (testNameInput.value === "" || testDate.value === "" || rocketType.value === "" || boosters.value === "" || production.value === "" || wind.value ==="") {
+//             alert("All fields are required!");
+//             event.preventDefault();
+//          }
+//       });
+//    });
+
+
 	</script>
 </head>
 
 <body>
 
 	<form id="searchForm" method="GET">
-    	<label><input type="text" name="q"/></label>
+    	<label><input type="text" name="q" placeholder="search something!"/></label>
 
         <label>Google<input type="radio" name="engine" value="google"/></label>
         
